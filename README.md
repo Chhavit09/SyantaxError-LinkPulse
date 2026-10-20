@@ -201,6 +201,7 @@ The live demo uses the custom domain `syntaxerror-linkpulse.jainovation.xyz`: a 
 | `DEMO_PASSWORD` | Password for the seeded demo user. |
 | `STORE_FULL_IP` / `IP_RETENTION_DAYS` | Keep full visitor IPs (default on) and for how many days (default 30). |
 | `OWNER_SEES_FULL_IP` | Show full IPs to link owners too (default off; admins always see them). |
+| `GA_MEASUREMENT_ID` | Google Analytics 4 ID (e.g. `G-4C6XT5QZFH`) for LinkPulse's own pages. Not loaded on short links, landing pages or other visitor pages; query strings are stripped. Empty = off. |
 | `SEED_ON_START` | `1` = load demo data when the database has no links. |
 | `BASE_URL` | Public URL used in short links and QR codes. |
 | `DATABASE_PATH`, `MODEL_DIR`, `GEOLITE2_PATH`, `TRUSTED_PROXIES`, `SESSION_COOKIE_SECURE` | See `app/config.py`. |

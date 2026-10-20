@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import logging
+import re
 from datetime import timedelta
 
 import click
@@ -80,7 +81,9 @@ def create_app(overrides: dict | None = None) -> Flask:
 
     @app.context_processor
     def _inject():
-        return {"current_user": g.get("user"), "csrf_token": csrf_token, "is_admin": is_admin}
+        ga = app.config.get("GA_MEASUREMENT_ID", "")
+        return {"current_user": g.get("user"), "csrf_token": csrf_token, "is_admin": is_admin,
+                "ga_id": ga if re.fullmatch(r"G-[A-Z0-9]{4,12}", ga or "") else ""}
 
     @app.after_request
     def _headers(resp):

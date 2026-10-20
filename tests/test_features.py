@@ -359,6 +359,28 @@ class QRStudioTests(AppTestCase):
         self.assertEqual(self.client.get(f"/links/{lid}/poster").status_code, 200)
 
 
+class GoogleAnalyticsTests(AppTestCase):
+    def test_only_on_linkpulse_pages_never_on_visitor_pages(self):
+        self.app.config["GA_MEASUREMENT_ID"] = "G-4C6XT5QZFH"
+        home = self.app.test_client().get("/").get_data(as_text=True)
+        self.assertIn("googletagmanager.com/gtag/js?id=G-4C6XT5QZFH", home)
+        self.assertIn("location.origin + location.pathname", home)   # query strings are not sent
+        self.assertIn("Google Analytics", self.app.test_client().get("/privacy").get_data(as_text=True))
+        self.login(self.user_id)
+        self.assertIn("googletagmanager", self.client.get("/dashboard").get_data(as_text=True))
+        self.create_link(alias="ga-landing", landing={"enabled": True, "heading": "Hi"})
+        self.create_link(alias="ga-pw", password="secret1")
+        visitor = self.app.test_client()
+        for path in ("/ga-landing", "/ga-pw", "/does-not-exist"):
+            self.assertNotIn("googletagmanager", visitor.get(path, headers=HUMAN).get_data(as_text=True), path)
+
+    def test_missing_or_malformed_id_adds_nothing(self):
+        for value in ("", "<script>alert(1)</script>", "UA-12345-1"):
+            self.app.config["GA_MEASUREMENT_ID"] = value
+            self.assertNotIn("googletagmanager", self.app.test_client().get("/").get_data(as_text=True))
+        self.assertNotIn("Google Analytics", self.app.test_client().get("/privacy").get_data(as_text=True))
+
+
 class MigrationAndSeedTests(AppTestCase):
     def test_old_database_gets_new_columns(self):
         path = str(Path(self.tmp.name) / "old.db")

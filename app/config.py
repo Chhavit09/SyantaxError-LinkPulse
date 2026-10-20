@@ -21,6 +21,8 @@ class Config:
     IP_HASH_SALT = os.environ.get("IP_HASH_SALT") or ""
     MODEL_DIR = os.environ.get("MODEL_DIR", str(ROOT / "ml" / "models"))
     GEOLITE2_PATH = os.environ.get("GEOLITE2_PATH", "")  # path to GeoLite2-City.mmdb (optional)
+    # Google Analytics 4 for LinkPulse's own pages (never on short links or landing pages). Empty = off.
+    GA_MEASUREMENT_ID = os.environ.get("GA_MEASUREMENT_ID", "").strip()
     # Number of reverse proxies in front of the app (Render: 1). Keep 0 when clients
     # connect directly, otherwise anyone can spoof X-Forwarded-For and dodge rate limits.
     TRUSTED_PROXIES = int(os.environ.get("TRUSTED_PROXIES", "0"))
