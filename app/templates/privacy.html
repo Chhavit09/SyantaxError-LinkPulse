@@ -23,8 +23,14 @@
   <h2 class="mt-4">Time on page and scroll depth</h2>
   <p>Measured on landing pages hosted by LinkPulse (the page some links show before you continue), including which button you choose,
      and on websites whose owners added LinkPulse's script. LinkPulse never reads other websites.</p>
+  {% if ga_id %}
+  <h2 class="mt-4">The LinkPulse website itself</h2>
+  <p>LinkPulse's own pages (home, sign-in, dashboard and the other management pages) use Google Analytics to count visits and
+     feature use. Google Analytics sets cookies and sends usage data to Google. It is <strong>not</strong> loaded on short links,
+     landing pages or any page you reach by opening a short link, and the links people shorten are never sent to it.</p>
+  {% endif %}
   <h2 class="mt-4">What we don't do</h2>
-  <p class="mb-0">No cookies are set on visitors, nothing is sold or shared with advertisers, and other websites are never shown inside LinkPulse.</p>
+  <p class="mb-0">No cookies are set on people who open short links, nothing is sold or shared with advertisers, and other websites are never shown inside LinkPulse.</p>
 </section>
 </div></div>
 {% endblock %}

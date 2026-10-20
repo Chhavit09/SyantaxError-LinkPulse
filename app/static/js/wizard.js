@@ -128,6 +128,8 @@
     $("studio").href = `/links/${link.id}/studio`;
     $("details").href = `/links/${link.id}`;
     LP.copy(link.short_url, $("copy")); // instant copy
+    LP.track("link_created", { method: "wizard", landing_page: Boolean(payload.landing),
+                               click_limit: Boolean(payload.max_clicks), password: Boolean(payload.password) });
   });
 
   $("landing_enabled").addEventListener("change", (e) => {

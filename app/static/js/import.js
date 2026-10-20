@@ -67,5 +67,6 @@
     render({ ok: 0, warning: 0, error: remaining.length, total: rows.length });
     $("summary").textContent = `Imported ${data.imported} links. ${data.failed ? `${data.failed} rows still need fixing.` : ""}`;
     LP.toast(`Imported ${data.imported} links.`);
+    LP.track("csv_import", { imported: data.imported, failed: data.failed });
   });
 })();

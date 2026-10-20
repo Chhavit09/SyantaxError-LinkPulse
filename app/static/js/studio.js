@@ -104,7 +104,7 @@
   $("save").addEventListener("click", async () => {
     if (!valid) return;
     const { ok, data } = await api("PUT", `/api/links/${STUDIO.id}/qr-design`, opts);
-    if (ok) LP.toast("Design saved. Every QR download for this link now uses it.");
+    if (ok) { LP.toast("Design saved. Every QR download for this link now uses it."); LP.track("qr_design_saved", { style: opts.style, logo: hasLogo }); }
     else LP.issues($("design-issues"), (data.errors || []).map((m) => ({ message: m })), "error");
   });
   $("reset").addEventListener("click", () => { opts = { ...defaults }; sync(); refresh(); });
@@ -143,8 +143,11 @@
     } }, "Share…"));
   }
   for (const [name, href] of targets) {
-    share.append(h("a", { class: "btn btn-outline-primary", href, target: "_blank", rel: "noopener noreferrer" }, name));
+    share.append(h("a", { class: "btn btn-outline-primary", href, target: "_blank", rel: "noopener noreferrer",
+                          onclick: () => LP.track("share", { method: name.toLowerCase() }) }, name));
   }
+  $("dl-png").addEventListener("click", () => LP.track("qr_download", { format: "png" }));
+  $("dl-svg").addEventListener("click", () => LP.track("qr_download", { format: "svg" }));
 
   const stage = $("stage");
   if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {

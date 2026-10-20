@@ -136,6 +136,7 @@ const LPPaste = (() => {
     $("lpq-view").href = `/links/${link.id}`;
     panel.classList.remove("lp-success"); void panel.offsetWidth; panel.classList.add("lp-success");
     LP.copy(link.short_url, $("lpq-copy"));
+    LP.track("link_created", { method: "quick_paste" });
     document.dispatchEvent(new CustomEvent("lp:link-created", { detail: link }));
   }
 

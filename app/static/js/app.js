@@ -63,6 +63,11 @@ const LP = (() => {
   const STATUS_LABELS = { active: "Active", paused: "Paused", disabled: "Disabled", expired: "Expired", limit_reached: "Limit reached" };
   const status = (s) => h("span", { class: `lp-status ${s}`, text: STATUS_LABELS[s] || s });
 
+  /* Google Analytics event, if GA is enabled on this page. Never pass URLs or personal data. */
+  function track(name, params = {}) {
+    try { if (typeof window.gtag === "function") window.gtag("event", name, params); } catch { /* analytics must never break the app */ }
+  }
+
   function legacyCopy(text) {
     const ta = h("textarea", { style: "position:fixed;opacity:0", readonly: true });
     ta.value = text;
@@ -78,6 +83,7 @@ const LP = (() => {
   async function copy(text, button) {
     let ok = false;
     try { await navigator.clipboard.writeText(text); ok = true; } catch { ok = legacyCopy(text); }
+    if (ok) track("copy_link");
     if (button) {
       const label = button.dataset.label || button.textContent;
       button.dataset.label = label;
@@ -185,5 +191,5 @@ const LP = (() => {
     Chart.defaults.color = "#5B6B7F";
   }
 
-  return { h, api, toast, fmt, status, copy, issues, tz, epochFromInput, inputFromEpoch, bars, countUp, debounce, isDark, typing, csrf };
+  return { h, api, toast, fmt, status, copy, issues, tz, epochFromInput, inputFromEpoch, bars, countUp, debounce, isDark, typing, csrf, track };
 })();
