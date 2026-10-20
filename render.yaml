@@ -24,7 +24,7 @@ services:
       - key: SESSION_COOKIE_SECURE
         value: "1"
       - key: SEED_ON_START
-        value: "1"
+        value: "0"
       - key: ADMIN_EMAIL
         value: admin@linkpulse.local
       - key: GA_MEASUREMENT_ID          # Google Analytics, LinkPulse's own pages only
