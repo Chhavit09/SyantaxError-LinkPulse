@@ -6,7 +6,7 @@ One link record at the centre: **C decides, Python manages, ML protects.**
 
 ## Live demo
 
-**https://syntaxerror-linkpulse.jainovation.xyz**
+**https://syntaxerror.jainovation.xyz**
 
 Create your own account on the site, or ask the team for the demo account (`demo@linkpulse.local`). The site runs on Render's free plan: it sleeps after 15 minutes without visitors, so the first page can take up to a minute to load, and the data resets to the demo set whenever the service restarts. Backup address for the same app: https://linkpulse-tgyg.onrender.com
 
