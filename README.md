@@ -1,6 +1,6 @@
 # LinkPulse — URL shortener and analytics platform
 
-Team SyntaxError · Graphic Era Hill University (Haldwani) · Tech Geeks hackathon
+Team SyntaxError
 
 One link record at the centre: **C decides, Python manages, ML protects.**
 
