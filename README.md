@@ -4,6 +4,27 @@ Team SyntaxError · Graphic Era Hill University (Haldwani) · Tech Geeks hackath
 
 One link record at the centre: **C decides, Python manages, ML protects.**
 
+## Live demo
+
+**https://syntaxerror-linkpulse.jainovation.xyz**
+
+Create your own account on the site, or ask the team for the demo account (`demo@linkpulse.local`). The site runs on Render's free plan: it sleeps after 15 minutes without visitors, so the first page can take up to a minute to load, and the data resets to the demo set whenever the service restarts. Backup address for the same app: https://linkpulse-tgyg.onrender.com
+
+Seeded links that show each rule (open them while signed out):
+
+| Link | What happens |
+|---|---|
+| [/fest26](https://syntaxerror-linkpulse.jainovation.xyz/fest26) | Normal redirect; its dashboard shows a click-spike alert |
+| [/fest-info](https://syntaxerror-linkpulse.jainovation.xyz/fest-info) | Landing page; time on page, scroll depth and "reading now" are measured |
+| [/yt-talk](https://syntaxerror-linkpulse.jainovation.xyz/yt-talk) | On a phone, tries to open the YouTube app |
+| [/vip-preview](https://syntaxerror-linkpulse.jainovation.xyz/vip-preview) | Password protected (password: `pulse2026`) |
+| [/early-bird](https://syntaxerror-linkpulse.jainovation.xyz/early-bird) | Expired: redirect stopped, analytics kept |
+| [/first50](https://syntaxerror-linkpulse.jainovation.xyz/first50) | Click limit reached |
+| [/store](https://syntaxerror-linkpulse.jainovation.xyz/store) | Paused by its owner |
+| [/free-recharge](https://syntaxerror-linkpulse.jainovation.xyz/free-recharge) | Disabled by an admin (phishing takedown) |
+
+## How it's built
+
 | Layer | What it does | Where |
 |---|---|---|
 | C core engine | Base62 codes, alias hash table, rule order (status → expiry → click limit → password), token-bucket rate limiter | `engine/` |
@@ -163,6 +184,8 @@ To train on real data: `python ml/train_models.py --url-csv urls.csv --bot-csv c
 ## Deploying on Render
 
 `render.yaml` is a Blueprint: push the repo, create a Blueprint in Render, and set `ADMIN_PASSWORD`, `DEMO_PASSWORD` and `BASE_URL` when prompted.
+
+The live demo uses the custom domain `syntaxerror-linkpulse.jainovation.xyz`: a `CNAME` record pointing to the service's `onrender.com` hostname, added under the service's **Settings → Custom Domains**, with `BASE_URL=https://syntaxerror-linkpulse.jainovation.xyz` so short links and QR codes use it.
 
 - **The free tier wipes SQLite** on every deploy, restart and spin-down (free services have an ephemeral filesystem and can't attach persistent disks). `SEED_ON_START=1` rebuilds the demo data on boot. For persistence, use a paid instance with a disk and point `DATABASE_PATH` at it.
 - Free services sleep after 15 minutes without traffic; open the site a minute before presenting.
